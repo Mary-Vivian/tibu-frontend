@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+// @ts-ignore -- Next.js handles CSS imports at build time.
 import "./globals.css";
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
+
+// on the <body> tag:
+<body className={`${inter.className} bg-slate-50 text-slate-900 antialiased`}></body>
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
