@@ -53,8 +53,8 @@ export function HowItWorks() {
       onMouseLeave={() => setPaused(false)}
     >
       <div className="space-y-3">
-        {steps.map(([icon, title], idx) => (
-          <button
+         {steps.map(([, title], idx) => (
+            <button
             key={title}
             onClick={() => setI(idx)}
             className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition ${

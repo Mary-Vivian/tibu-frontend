@@ -69,7 +69,7 @@ export default function About() {
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <Reveal>
-          <h2 className="mb-8 text-center text-2xl font-bold">Who it's for</h2>
+         <h2 className="mb-8 text-center text-2xl font-bold">Who it&apos;s for</h2>
           <Tabs tabs={tabs} />
         </Reveal>
       </section>

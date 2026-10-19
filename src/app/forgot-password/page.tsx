@@ -19,7 +19,7 @@ export default function ForgotPasswordPage() {
   return (
     <AuthCard title="Forgot password">
       <p className="mb-4 text-center text-sm text-slate-600">
-        Enter the email on your account and we'll send you a link to choose a new password.
+      Enter the email on your account and we&apos;ll send you a link to choose a new password.
       </p>
       <form onSubmit={onSubmit} className="space-y-4">
         <Field label="Email" name="email" type="email" autoComplete="email" value={values.email} onChange={onChange} />
