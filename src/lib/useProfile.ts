@@ -8,6 +8,7 @@ export interface Profile {
   role: "admin" | "doctor" | "patient" | "user";
   patient_id: number | null;
   doctor_id: number | null;
+  specialization?: string | null;
 }
 
 // Pass allowed roles to restrict a page; others are sent back to the dashboard

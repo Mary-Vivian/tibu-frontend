@@ -4,7 +4,9 @@ import Link from "next/link";
 import { api } from "@/lib/api";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
-import { Profile } from "@/lib/useProfile";
+import { Profile, useProfile } from "@/lib/useProfile";
+import { DoctorDashboard } from "@/components/doctor/DoctorDashboard";
+import { PatientDashboard } from "@/components/patient/PatientDashboard";
 
 interface Appt {
   id: number;
@@ -95,9 +97,13 @@ function Overview({ profile }: { profile: Profile }) {
 }
 
 export default function Dashboard() {
+  const profile = useProfile();
+  if (!profile) return <p className="mt-10 text-center text-slate-500">Loading...</p>;
+  if (profile.role === "doctor") return <DoctorDashboard profile={profile} />;
+  if (profile.role === "patient") return <PatientDashboard profile={profile} />;
   return (
     <AppShell title="Dashboard">
-      {(profile) => <Overview profile={profile} />}
+      {(p) => <Overview profile={p} />}
     </AppShell>
   );
 }

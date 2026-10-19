@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { api, errorMessage } from "@/lib/api";
 import { AppShell } from "@/components/AppShell";
 import { StatusBadge } from "@/components/StatusBadge";
-import { Profile } from "@/lib/useProfile";
+import CallButton from "@/components/CallButton";
+import { Profile, useProfile } from "@/lib/useProfile";
+import { DoctorShell } from "@/components/doctor/DoctorShell";
+import { PatientShell } from "@/components/patient/PatientShell";
 
 interface Appt {
   id: number;
   appointment_date: string;
   status: string;
+  room_id: string;
   doctor__user__username: string;
   patient__user__username: string;
 }
@@ -59,7 +63,8 @@ function List({ profile }: { profile: Profile }) {
             </div>
 
             {a.status === "Scheduled" && (
-              <div className="mt-3 flex gap-2">
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <CallButton roomId={a.room_id} status={a.status} />
                 <button
                   onClick={() => setStatus(a.id, "Cancelled")}
                   className="rounded-lg border border-red-300 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50"
@@ -84,9 +89,25 @@ function List({ profile }: { profile: Profile }) {
 }
 
 export default function AppointmentsPage() {
+  const profile = useProfile();
+  if (!profile) return <p className="mt-10 text-center text-slate-500">Loading...</p>;
+  if (profile.role === "doctor") {
+    return (
+      <DoctorShell profile={profile} active="/appointments" title="Appointments">
+        <List profile={profile} />
+      </DoctorShell>
+    );
+  }
+  if (profile.role === "patient") {
+    return (
+      <PatientShell profile={profile} active="/appointments" title="My appointments">
+        <List profile={profile} />
+      </PatientShell>
+    );
+  }
   return (
     <AppShell title="Appointments">
-      {(profile) => <List profile={profile} />}
+      {(p) => <List profile={p} />}
     </AppShell>
   );
 }

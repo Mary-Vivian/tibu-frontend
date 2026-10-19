@@ -3,7 +3,8 @@ import { FormEvent, useEffect } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
 import { useDoctors } from "@/lib/useDoctors";
-import { AppShell } from "@/components/AppShell";
+import { useProfile } from "@/lib/useProfile";
+import { PatientShell } from "@/components/patient/PatientShell";
 import { Alert, Card, Field, SubmitButton, inputClass, useForm, useSubmit } from "@/components/ui";
 
 // Earliest selectable time = now, in the user's local timezone
@@ -91,13 +92,15 @@ function BookForm() {
 }
 
 export default function BookAppointmentPage() {
+  const profile = useProfile(["patient"]);
+  if (!profile) return <p className="mt-10 text-center text-slate-500">Loading...</p>;
+
   return (
-    <AppShell
-      title="Book an appointment"
-      subtitle="Choose a doctor and a time that suits you"
-      allow={["patient"]}
-    >
-      {() => <BookForm />}
-    </AppShell>
+    <PatientShell profile={profile} active="/appointments/book" title="Book an appointment">
+      <p className="mb-4 text-sm text-slate-500">Choose a doctor and a time that suits you.</p>
+      <div className="max-w-xl">
+        <BookForm />
+      </div>
+    </PatientShell>
   );
 }
